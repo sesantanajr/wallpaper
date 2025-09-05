@@ -1,0 +1,16 @@
+id=Mozilla.Thunderbird
+id=AnyDesk.AnyDesk
+id=Google.GoogleDrive
+pwa=GoogleDocs
+pwa=GoogleSheets
+id=RARLab.WinRAR
+id=Spotify.Spotify
+id=Foxit.FoxitReader
+id=ByteDance.CapCut
+id=Discord.Discord
+id=Apache.OpenOffice
+id=TheDocumentFoundation.LibreOffice
+id=Glarysoft.GlaryUtilities
+id=Dropbox.Dropbox
+id=Zoom.Zoom
+match=(?i)Zoom\s+Workplace
