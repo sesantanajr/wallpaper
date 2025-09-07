@@ -1,0 +1,41 @@
+{
+  "metadata": {
+    "version": "2025-09-07",
+    "owner": "Adcos",
+    "notes": "Apps não homologados. Winget -> ARP -> Tools."
+  },
+  "packages": [
+    { "name": "WinRAR", "wingetId": "RARLab.WinRAR", "arpRegex": ["^WinRAR"] },
+    { "name": "qBittorrent", "wingetId": "qBittorrent.qBittorrent", "arpRegex": ["^qBittorrent"] },
+    { "name": "Opera", "wingetId": "Opera.Opera", "arpRegex": ["^Opera (GX)? Browser"] },
+    { "name": "Brave", "wingetId": "Brave.Brave", "arpRegex": ["^Brave"] },
+    { "name": "Vivaldi", "wingetId": "VivaldiTechnologies.Vivaldi", "arpRegex": ["^Vivaldi"] },
+    { "name": "Tor Browser", "wingetId": "TorProject.TorBrowser", "arpRegex": ["^Tor Browser"] },
+    { "name": "Pale Moon", "wingetId": "MoonchildProductions.PaleMoon", "arpRegex": ["^Pale Moon"] },
+    { "name": "Thunderbird", "wingetId": "Mozilla.Thunderbird", "arpRegex": ["^Mozilla Thunderbird"] },
+    { "name": "LibreOffice", "wingetId": "TheDocumentFoundation.LibreOffice", "arpRegex": ["^LibreOffice"] },
+    { "name": "OpenOffice", "wingetId": "Apache.OpenOffice", "arpRegex": ["^Apache OpenOffice"] },
+    { "name": "WPS Office", "wingetId": "Kingsoft.WPSOffice", "arpRegex": ["^WPS Office"] },
+    { "name": "ONLYOFFICE", "wingetId": "ONLYOFFICE.DesktopEditors", "arpRegex": ["^ONLYOFFICE Desktop Editors"] },
+    { "name": "Canva", "wingetId": "Canva.Canva", "arpRegex": ["^Canva"] },
+    { "name": "CapCut", "wingetId": "ByteDance.CapCut", "arpRegex": ["^CapCut"] },
+    { "name": "Dropbox", "wingetId": "Dropbox.Dropbox", "arpRegex": ["^Dropbox"] },
+    { "name": "Box", "wingetId": "Box.Box", "arpRegex": ["^Box (Drive|Tools|For Office)"] },
+    { "name": "MEGA", "wingetId": "Mega.MEGASync", "arpRegex": ["^(MEGA(Sync)?|MEGAsync)"] },
+    { "name": "pCloud", "wingetId": "pCloudAG.pCloudDrive", "arpRegex": ["^pCloud Drive"] },
+    { "name": "iCloud", "wingetId": "Apple.iCloud", "arpRegex": ["^iCloud"] },
+    { "name": "DuckDuckGo Browser", "wingetId": "DuckDuckGo.DesktopBrowser", "arpRegex": ["^DuckDuckGo"] },
+    { "name": "Yandex Browser", "wingetId": "Yandex.Browser", "arpRegex": ["^Yandex(Browser)?"] },
+    { "name": "Avast Secure Browser", "wingetId": "AVAST.AvastSecureBrowser", "arpRegex": ["^Avast (Secure )?Browser"] },
+
+    // Antivírus (ordem importa: tenta winget/ARP e, se falhar, aciona ferramenta)
+    { "name": "Avast Antivirus", "wingetId": "AVASTSoftware.AvastAntivirus", "arpRegex": ["^Avast( Free)? Antivirus","^Avast Premium Security"], "removal": { "type": "vendorTool", "toolName": "avastclear.exe", "toolUrl": "https://adcos.blob.core.windows.net/tools/avastclear.exe", "silentArgs": "/silent" } },
+    { "name": "AVG Antivirus", "wingetId": "AVG.AVGAntiVirus", "arpRegex": ["^AVG AntiVirus","^AVG Internet Security"], "removal": { "type": "vendorTool", "toolName": "avgclear.exe", "toolUrl": "https://adcos.blob.core.windows.net/tools/avgclear.exe", "silentArgs": "/silent" } },
+    { "name": "Kaspersky (consumer)", "wingetId": "Kaspersky.Kaspersky", "arpRegex": ["^Kaspersky (Anti-Virus|Security Cloud|Internet Security)"], "removal": { "type": "vendorTool", "toolName": "kavremover.exe", "toolUrl": "https://adcos.blob.core.windows.net/tools/kavremover.exe", "supportsSilent": false, "notes": "Requer captcha; marcar como pendente." } },
+    { "name": "Bitdefender", "wingetId": "Bitdefender.AntivirusFree", "arpRegex": ["^Bitdefender"], "removal": { "type": "command", "command": "\"C:\\Program Files\\Bitdefender\\Endpoint Security\\eps.rmm.exe\" -uninstall" } },
+    { "name": "Avira", "wingetId": "Avira.Antivirus", "arpRegex": ["^Avira"], "removal": { "type": "vendorTool", "toolName": "avira-uninstall.exe", "toolUrl": "https://adcos.blob.core.windows.net/tools/avira-uninstall.exe", "silentArgs": "/quiet" } },
+    { "name": "Panda", "wingetId": "Panda.PandaSecurity", "arpRegex": ["^Panda"], "removal": { "type": "vendorTool", "toolName": "panda-uninstall.exe", "toolUrl": "https://adcos.blob.core.windows.net/tools/panda-uninstall.exe", "silentArgs": "/quiet" } },
+    { "name": "Malwarebytes", "wingetId": "Malwarebytes.Malwarebytes", "arpRegex": ["^Malwarebytes"], "removal": { "type": "wingetOnly" } },
+    { "name": "McAfee", "wingetId": "McAfee.Livesafe", "arpRegex": ["^McAfee"], "removal": { "type": "vendorTool", "toolName": "MCPR.exe", "toolUrl": "https://adcos.blob.core.windows.net/tools/MCPR.exe", "silentArgs": "/silent" } }
+  ]
+}
