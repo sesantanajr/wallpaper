@@ -1,41 +1,196 @@
 {
-  "metadata": {
-    "version": "2025-09-07",
-    "owner": "Adcos",
-    "notes": "Apps não homologados. Winget -> ARP -> Tools."
-  },
+  "schemaVersion": 1,
+  "version": "2025-09-07",
   "packages": [
-    { "name": "WinRAR", "wingetId": "RARLab.WinRAR", "arpRegex": ["^WinRAR"] },
-    { "name": "qBittorrent", "wingetId": "qBittorrent.qBittorrent", "arpRegex": ["^qBittorrent"] },
-    { "name": "Opera", "wingetId": "Opera.Opera", "arpRegex": ["^Opera (GX)? Browser"] },
-    { "name": "Brave", "wingetId": "Brave.Brave", "arpRegex": ["^Brave"] },
-    { "name": "Vivaldi", "wingetId": "VivaldiTechnologies.Vivaldi", "arpRegex": ["^Vivaldi"] },
-    { "name": "Tor Browser", "wingetId": "TorProject.TorBrowser", "arpRegex": ["^Tor Browser"] },
-    { "name": "Pale Moon", "wingetId": "MoonchildProductions.PaleMoon", "arpRegex": ["^Pale Moon"] },
-    { "name": "Thunderbird", "wingetId": "Mozilla.Thunderbird", "arpRegex": ["^Mozilla Thunderbird"] },
-    { "name": "LibreOffice", "wingetId": "TheDocumentFoundation.LibreOffice", "arpRegex": ["^LibreOffice"] },
-    { "name": "OpenOffice", "wingetId": "Apache.OpenOffice", "arpRegex": ["^Apache OpenOffice"] },
-    { "name": "WPS Office", "wingetId": "Kingsoft.WPSOffice", "arpRegex": ["^WPS Office"] },
-    { "name": "ONLYOFFICE", "wingetId": "ONLYOFFICE.DesktopEditors", "arpRegex": ["^ONLYOFFICE Desktop Editors"] },
-    { "name": "Canva", "wingetId": "Canva.Canva", "arpRegex": ["^Canva"] },
-    { "name": "CapCut", "wingetId": "ByteDance.CapCut", "arpRegex": ["^CapCut"] },
-    { "name": "Dropbox", "wingetId": "Dropbox.Dropbox", "arpRegex": ["^Dropbox"] },
-    { "name": "Box", "wingetId": "Box.Box", "arpRegex": ["^Box (Drive|Tools|For Office)"] },
-    { "name": "MEGA", "wingetId": "Mega.MEGASync", "arpRegex": ["^(MEGA(Sync)?|MEGAsync)"] },
-    { "name": "pCloud", "wingetId": "pCloudAG.pCloudDrive", "arpRegex": ["^pCloud Drive"] },
-    { "name": "iCloud", "wingetId": "Apple.iCloud", "arpRegex": ["^iCloud"] },
-    { "name": "DuckDuckGo Browser", "wingetId": "DuckDuckGo.DesktopBrowser", "arpRegex": ["^DuckDuckGo"] },
-    { "name": "Yandex Browser", "wingetId": "Yandex.Browser", "arpRegex": ["^Yandex(Browser)?"] },
-    { "name": "Avast Secure Browser", "wingetId": "AVAST.AvastSecureBrowser", "arpRegex": ["^Avast (Secure )?Browser"] },
+    {
+      "displayName": "DuckDuckGo Private Browser",
+      "wingetId": "DuckDuckGo.DesktopBrowser",
+      "arpRegex": ["^DuckDuckGo( Desktop)? Browser$"],
+      "kill": ["duckduckgo", "duckduckgo browser"]
+    },
+    {
+      "displayName": "Yandex Browser",
+      "wingetId": "Yandex.Browser",
+      "arpRegex": ["^Yandex( Browser)?$", "^Яндекс.Браузер$"],
+      "kill": ["browser"] 
+    },
+    {
+      "displayName": "Avast Secure Browser",
+      "wingetId": "AVAST.AvastSecureBrowser",
+      "arpRegex": ["^Avast( Secure)? Browser$"],
+      "kill": ["avastbrowser"]
+    },
+    {
+      "displayName": "Avast Antivirus (todas as edições)",
+      "wingetId": null,
+      "arpRegex": ["^Avast( Free)? Antivirus$", "^Avast Premium Security$", "^Avast One( Essential)?$"],
+      "kill": ["avastui", "avastsvc", "instup"],
+      "removal": {
+        "vendorTool": {
+          "toolUrl": "https://files.avast.com/tools/avastclear.exe",
+          "args": "/silent",
+          "requiresSafeMode": true,
+          "notes": "Ferramenta oficial; a remoção totalmente silenciosa pode exigir Modo de Segurança."
+        }
+      }
+    },
+    {
+      "displayName": "AVG AntiVirus (todas as edições)",
+      "wingetId": null,
+      "arpRegex": ["^AVG AntiVirus( FREE)?$", "^AVG Internet Security$", "^AVG( AntiVirus)? Business (Edition|Security)$"],
+      "kill": ["avgui", "avgsvc"],
+      "removal": {
+        "vendorTool": {
+          "toolUrl": "https://files-download.avg.com/util/tools/AVGClear.exe",
+          "args": "",
+          "requiresSafeMode": true,
+          "notes": "Em alguns cenários não há switch 100% silencioso; usar em Safe Mode."
+        }
+      }
+    },
+    {
+      "displayName": "Kaspersky (Free/Standard/Total/Endpoint)",
+      "wingetId": null,
+      "arpRegex": ["^Kaspersky( Free)?$", "^Kaspersky (Standard|Plus|Premium)$", "^Kaspersky (Total|Internet) Security$", "^Kaspersky Endpoint Security for Windows$"],
+      "kill": ["avp"],
+      "removal": {
+        "primary": {
+          "command": "msiexec.exe",
+          "args": "/x {KASPERSKY-PRODUCT-GUID} /qn",
+          "notes": "Se protegido por senha, usar setup.exe /pKLLOGIN=USER /pKLPASSWD=PASS /s /x"
+        },
+        "docs": "https://support.kaspersky.com.br/kes10/123471"
+      }
+    },
+    {
+      "displayName": "Bitdefender (Consumer)",
+      "wingetId": "Bitdefender.Bitdefender",
+      "arpRegex": ["^Bitdefender( Antivirus)? Free$", "^Bitdefender Total Security$", "^Bitdefender Internet Security$"],
+      "kill": ["bdservicehost"],
+      "removal": {
+        "vendorTool": {
+          "toolUrl": "https://download.bitdefender.com/windows/installer/en-us/bitdefender_uninstall_tool.exe",
+          "args": "/silent",
+          "notes": "Usar se a desinstalação padrão falhar."
+        }
+      }
+    },
+    {
+      "displayName": "Bitdefender (Endpoint/BEST)",
+      "wingetId": null,
+      "arpRegex": ["^Bitdefender Endpoint Security Tools$", "^BEST$"],
+      "kill": ["epsecurityservice"],
+      "removal": {
+        "vendorTool": {
+          "toolUrl": "https://download.bitdefender.com/SMB/Cloud/Installer/eps_uninstall_tool.exe",
+          "args": "/bdparams /uninstall",
+          "notes": "Para endpoints gerenciados (BEST)."
+        }
+      }
+    },
+    {
+      "displayName": "Avira Free Security",
+      "wingetId": null,
+      "arpRegex": ["^Avira( Free)? (Security|Antivirus)$", "^Avira Launcher$"],
+      "kill": ["avcenter", "avira"],
+      "removal": {
+        "primary": {
+          "command": "\"C:\\Program Files (x86)\\Avira\\Antivirus\\setup.exe\"",
+          "args": "/remsilentnoreboot",
+          "notes": "Remove silenciosamente; reinício depois pode ser necessário."
+        }
+      }
+    },
+    {
+      "displayName": "Panda Free Antivirus",
+      "wingetId": null,
+      "arpRegex": ["^Panda( Free)? Antivirus$","^Panda Dome( Free)?$"],
+      "kill": ["PSUAservice", "Panda_URL_Filtering"],
+      "removal": {
+        "vendorTool": {
+          "toolUrl": "https://downloadpandasecurity.com/tools/PandaGenericUninstaller.exe",
+          "args": "",
+          "notes": "Pode solicitar reinício; switches silenciosos podem variar por versão."
+        }
+      }
+    },
+    {
+      "displayName": "Malwarebytes (Home/Business)",
+      "wingetId": "Malwarebytes.Malwarebytes",
+      "arpRegex": ["^Malwarebytes( for Windows)?$", "^Malwarebytes Endpoint Agent$"],
+      "kill": ["mbam", "mbamservice", "mbamtray"]
+    },
+    {
+      "displayName": "McAfee (Consumer)",
+      "wingetId": null,
+      "arpRegex": ["^McAfee( LiveSafe| Total Protection)?$", "^McAfee Security$"],
+      "kill": ["mcshield", "mfefire", "mfewc"],
+      "removal": {
+        "vendorTool": {
+          "toolUrl": "https://download.mcafee.com/molbin/iss-loc/SupportTools/MCPR/MCPR.exe",
+          "args": "/q",
+          "notes": "Ferramenta MCPR para remoção silenciosa; pode exigir múltiplas execuções e reinício."
+        }
+      }
+    },
 
-    // Antivírus (ordem importa: tenta winget/ARP e, se falhar, aciona ferramenta)
-    { "name": "Avast Antivirus", "wingetId": "AVASTSoftware.AvastAntivirus", "arpRegex": ["^Avast( Free)? Antivirus","^Avast Premium Security"], "removal": { "type": "vendorTool", "toolName": "avastclear.exe", "toolUrl": "https://adcos.blob.core.windows.net/tools/avastclear.exe", "silentArgs": "/silent" } },
-    { "name": "AVG Antivirus", "wingetId": "AVG.AVGAntiVirus", "arpRegex": ["^AVG AntiVirus","^AVG Internet Security"], "removal": { "type": "vendorTool", "toolName": "avgclear.exe", "toolUrl": "https://adcos.blob.core.windows.net/tools/avgclear.exe", "silentArgs": "/silent" } },
-    { "name": "Kaspersky (consumer)", "wingetId": "Kaspersky.Kaspersky", "arpRegex": ["^Kaspersky (Anti-Virus|Security Cloud|Internet Security)"], "removal": { "type": "vendorTool", "toolName": "kavremover.exe", "toolUrl": "https://adcos.blob.core.windows.net/tools/kavremover.exe", "supportsSilent": false, "notes": "Requer captcha; marcar como pendente." } },
-    { "name": "Bitdefender", "wingetId": "Bitdefender.AntivirusFree", "arpRegex": ["^Bitdefender"], "removal": { "type": "command", "command": "\"C:\\Program Files\\Bitdefender\\Endpoint Security\\eps.rmm.exe\" -uninstall" } },
-    { "name": "Avira", "wingetId": "Avira.Antivirus", "arpRegex": ["^Avira"], "removal": { "type": "vendorTool", "toolName": "avira-uninstall.exe", "toolUrl": "https://adcos.blob.core.windows.net/tools/avira-uninstall.exe", "silentArgs": "/quiet" } },
-    { "name": "Panda", "wingetId": "Panda.PandaSecurity", "arpRegex": ["^Panda"], "removal": { "type": "vendorTool", "toolName": "panda-uninstall.exe", "toolUrl": "https://adcos.blob.core.windows.net/tools/panda-uninstall.exe", "silentArgs": "/quiet" } },
-    { "name": "Malwarebytes", "wingetId": "Malwarebytes.Malwarebytes", "arpRegex": ["^Malwarebytes"], "removal": { "type": "wingetOnly" } },
-    { "name": "McAfee", "wingetId": "McAfee.Livesafe", "arpRegex": ["^McAfee"], "removal": { "type": "vendorTool", "toolName": "MCPR.exe", "toolUrl": "https://adcos.blob.core.windows.net/tools/MCPR.exe", "silentArgs": "/silent" } }
+    { "displayName": "Pale Moon", "wingetId": "MoonchildProductions.PaleMoon", "arpRegex": ["^Pale Moon$"], "kill": ["palemoon"] },
+    { "displayName": "Thunderbird", "wingetId": "Mozilla.Thunderbird", "arpRegex": ["^Mozilla Thunderbird$"], "kill": ["thunderbird"] },
+    { "displayName": "LibreOffice", "wingetId": "TheDocumentFoundation.LibreOffice", "arpRegex": ["^LibreOffice$"], "kill": ["soffice"] },
+    { "displayName": "Apache OpenOffice", "wingetId": "Apache.OpenOffice", "arpRegex": ["^Apache OpenOffice$","^OpenOffice\\.org$"], "kill": ["soffice"] },
+    { "displayName": "WPS Office", "wingetId": "Kingsoft.WPSOffice", "arpRegex": ["^WPS Office$","^Kingsoft Office$"], "kill": ["wps", "et", "wpp"] },
+    { "displayName": "ONLYOFFICE Desktop Editors", "wingetId": "ONLYOFFICE.DesktopEditors", "arpRegex": ["^ONLYOFFICE Desktop Editors$"], "kill": ["DesktopEditors"] },
+
+    { "displayName": "Google Docs/Sheets/Slides (atalhos/app wrapper)", "wingetId": null, "arpRegex": ["^Google (Docs|Sheets|Slides)$"], "kill": [], "notes": "Normalmente são apps web; nada a remover se não houver item no ARP." },
+
+    { "displayName": "WinRAR", "wingetId": "RARLab.WinRAR", "arpRegex": ["^WinRAR( \\(64-bit\\))?$"], "kill": ["winrar"] },
+    { "displayName": "qBittorrent", "wingetId": "qBittorrent.qBittorrent", "arpRegex": ["^qBittorrent$"], "kill": ["qbittorrent"] },
+    { "displayName": "Glary Utilities", "wingetId": "Glarysoft.GlaryUtilities", "arpRegex": ["^Glary Utilities( PRO)?$"], "kill": ["integrator"] },
+
+    { "displayName": "Dropbox", "wingetId": "Dropbox.Dropbox", "arpRegex": ["^Dropbox$"], "kill": ["dropbox"] },
+    { "displayName": "Box Drive", "wingetId": "Box.Box", "arpRegex": ["^Box Drive$","^Box$"], "kill": ["Box"] },
+    { "displayName": "Google Drive", "wingetId": "Google.GoogleDrive", "arpRegex": ["^Google Drive$","^Backup and Sync from Google$"], "kill": ["GoogleDriveFS"] },
+    { "displayName": "MEGA Desktop (MEGAsync)", "wingetId": "Mega.MEGASync", "arpRegex": ["^MEGAsync$","^MEGA( Sync)?$"], "kill": ["MEGAsync"] },
+    { "displayName": "pCloud Drive", "wingetId": "pCloudAG.pCloudDrive", "arpRegex": ["^pCloud Drive$"], "kill": ["pcloud"] },
+    { "displayName": "iCloud Drive", "wingetId": "Apple.iCloud", "arpRegex": ["^iCloud$","^iCloud for Windows$"], "kill": ["icloud"] },
+
+    { "displayName": "Foxit PDF Reader", "wingetId": "Foxit.FoxitReader", "arpRegex": ["^Foxit (PDF )?Reader$"], "kill": ["foxitreader"] },
+
+    { "displayName": "Spotify", "wingetId": "Spotify.Spotify", "arpRegex": ["^Spotify$"], "kill": ["spotify"] },
+    { "displayName": "Amazon Kindle", "wingetId": "Amazon.Kindle", "arpRegex": ["^Amazon Kindle$","^Kindle$"], "kill": ["kindle"] },
+    { "displayName": "AnyDesk", "wingetId": "AnyDesk.AnyDesk", "arpRegex": ["^AnyDesk$"], "kill": ["anydesk"] },
+
+    { "displayName": "Microsoft Silverlight", "wingetId": "Microsoft.Silverlight", "arpRegex": ["^Microsoft Silverlight$"], "kill": ["sllauncher"] },
+
+    { "displayName": "Canva", "wingetId": "Canva.Canva", "arpRegex": ["^Canva$"], "kill": ["Canva"] },
+    { "displayName": "CapCut", "wingetId": "ByteDance.CapCut", "arpRegex": ["^CapCut$"], "kill": ["CapCut"] },
+    { "displayName": "Discord", "wingetId": "Discord.Discord", "arpRegex": ["^Discord$"], "kill": ["discord"] },
+    { "displayName": "Zoom", "wingetId": "Zoom.Zoom", "arpRegex": ["^Zoom( \\(32-bit\\))?$","^Zoom( Meetings)?$"], "kill": ["zoom", "zoomlauncher"] },
+
+    { "displayName": "Opera", "wingetId": "Opera.Opera", "arpRegex": ["^Opera Stable$","^Opera$"], "kill": ["opera"] },
+    { "displayName": "Opera GX", "wingetId": "Opera.OperaGX", "arpRegex": ["^Opera GX Stable$","^Opera GX$"], "kill": ["opera"] },
+    { "displayName": "Brave", "wingetId": "Brave.Brave", "arpRegex": ["^Brave( Browser)?$"], "kill": ["brave"] },
+    { "displayName": "Vivaldi", "wingetId": "VivaldiTechnologies.Vivaldi", "arpRegex": ["^Vivaldi$"], "kill": ["vivaldi"] },
+    { "displayName": "Tor Browser", "wingetId": "TorProject.TorBrowser", "arpRegex": ["^Tor Browser$"], "kill": ["firefox","tor"] },
+    { "displayName": "Opera (Developer/Beta) — opcional",
+      "wingetId": null,
+      "arpRegex": ["^Opera (Developer|Beta)$"],
+      "kill": ["opera"]
+    },
+
+    { "displayName": "Firefox", "wingetId": "Mozilla.Firefox", "arpRegex": ["^Mozilla Firefox$"], "kill": ["firefox"] },
+    { "displayName": "Thunderbird (duplicado p/ cobertura locale)", "wingetId": "Mozilla.Thunderbird", "arpRegex": ["^Thunderbird$","^Mozilla Thunderbird$"], "kill": ["thunderbird"] },
+
+    { "displayName": "LimeWire (legado/ forks)",
+      "wingetId": null,
+      "arpRegex": ["^LimeWire$", "^LimeWire Pro$", "^LimeWire (\\w+)$"],
+      "kill": ["limewire"]
+    },
+
+    { "displayName": "OpenOffice (alias Apache Office)",
+      "wingetId": "Apache.OpenOffice",
+      "arpRegex": ["^OpenOffice$", "^Apache OpenOffice$"],
+      "kill": ["soffice"]
+    }
   ]
 }
